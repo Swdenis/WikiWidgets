@@ -3,45 +3,48 @@ import axios from 'axios';
 
 const Search = () =>
 {   const [term,setTerm] = useState('');
+    const [debouncedTerm, setdebouncedTerm] = useState(term);
     const [results, setResults] = useState([]);
 
     console.log(results);
     
+    useEffect(()=>
+    {
+        const timerId = setTimeout(() =>
+        {
+            setdebouncedTerm(term);
+        },1000);
+
+        return ()=> {
+            clearTimeout(timerId);
+        };
+    },
+    [term]
+    );
 
     useEffect(()=>
+    {
+        const search = async() => 
         {
-            const search = async() => {
-                const {data} = await axios.get("https://en.wikipedia.org/w/api.php", {
-                    params: {
-                        action: 'query',
-                        list: 'search',
-                        origin: '*',
-                        format: 'json',
-                        srsearch: term
-                    },
-                });
-                console.log(data);
-                setResults(data.query.search);
-                };
-
-                if(term && !results) {
-                    search();
-                } else {
-
-                const timeoutId = setTimeout(()=>
-                {
-                    if(term) {
-                        search();
-                    }
-                },500);
-                
-                return( () => 
-                {
-                    clearTimeout(timeoutId);
-                })
+            const {data} = await axios.get("https://en.wikipedia.org/w/api.php", {
+                params: {
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: debouncedTerm
                 }
-            }, [term]);
+            });
 
+            setResults(data.query.search);
+        }
+
+        if(debouncedTerm) 
+        {
+            search();
+        }  
+    },[debouncedTerm]);
+    
     const renderedResults = results.map(result => {
         return(
             <div className="item" key={result.pageid}>
