@@ -38,18 +38,29 @@ const options = [
 export default ()=> {
     const [selected,setSelected] = useState(options[0]);
     const [showDropdown, setshowDropdown] = useState(true);
+    const [text,setText] = useState('Enter any text');
+    
     return(
         
         <div>     
             {/*<Accordion items={items}/>*/}
             {/*<Search/>*/}
             <button onClick={() => setshowDropdown(!showDropdown)}>Toggle dropdown</button>
-            {showDropdown ? 
-                <Dropdown 
+            {showDropdown ?
+                <div>
+                    <Dropdown 
                 options={options}
                 selected={selected}
                 onSelectedChange={setSelected}
                 />
+                <div class="ui input">
+                <input style={{color:`${selected.value}`}} 
+                type="text" 
+                value={text} 
+                onChange={e => setText(e.target.value)}/>
+                 </div>
+                </div> 
+                
             :
             null
             }
