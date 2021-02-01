@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 
 const Dropdown = ({options,selected,onSelectedChange}) => {
     const ref = useRef();
-
+    const [text,setText] = useState('Enter any text');
     const [open, setOpen] = useState(false);
 
     useEffect(()=>
@@ -40,7 +40,8 @@ const Dropdown = ({options,selected,onSelectedChange}) => {
     });
 
     return(
-        <div ref={ref} className="ui form">
+        <div>
+            <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a color</label>
                 <div onClick={
@@ -54,6 +55,11 @@ const Dropdown = ({options,selected,onSelectedChange}) => {
                 </div>
             </div>
         </div>
+        <div class="ui input">
+        <input style={{color:`${selected.value}`}} type="text" value={text} onChange={e => setText(e.target.value)}/>
+        </div>
+        </div>
+        
     );
 }
 
