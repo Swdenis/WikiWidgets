@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
+import Translate from './components/Translate';
 
 const items = [
     {
@@ -39,12 +40,13 @@ export default ()=> {
     const [selected,setSelected] = useState(options[0]);
     const [showDropdown, setshowDropdown] = useState(true);
     const [text,setText] = useState('Enter any text');
-    
+
     return(
         
         <div>     
             {/*<Accordion items={items}/>*/}
             {/*<Search/>*/}
+            {/*
             <button onClick={() => setshowDropdown(!showDropdown)}>Toggle dropdown</button>
             {showDropdown ?
                 <div>
@@ -52,6 +54,7 @@ export default ()=> {
                 options={options}
                 selected={selected}
                 onSelectedChange={setSelected}
+                label="Select a Color"
                 />
                 <div class="ui input">
                 <input style={{color:`${selected.value}`}} 
@@ -64,7 +67,8 @@ export default ()=> {
             :
             null
             }
-            
+            */}
+            <Translate/>
         </div>
     );
 };
